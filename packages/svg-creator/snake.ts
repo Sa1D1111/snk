@@ -42,12 +42,23 @@ export const createSnake = (
     const isHead = i === 0;
     const isTail = i === length - 1;
     const isMiddle = i === Math.floor(length / 2);
-    let fillColor = '--cs';
-    if (isHead || isTail) {
-      fillColor = '#000000'; // Black for head and tail
-    } else if (isMiddle) {
-      fillColor = '#FF0000'; // Red for middle body dot
-    }
+
+    // let fillColor = '--cs';
+    // if (isHead || isTail) {
+    //   fillColor = '#000000'; // Black for head and tail
+    // } else if (isMiddle) {
+    //   fillColor = '#FF0000'; // Red for middle body dot
+    // }
+
+
+    let fillColor = "#FFF";
+    if (isHead) {
+  fillColor = "red"; // Red for snake head
+} else if (isTail) {
+  fillColor = "black"; // Black for snake tail
+} else {
+  fillColor = "white"; // White for snake body
+}
 
     return h("rect", {
       class: `s s${i}`,
