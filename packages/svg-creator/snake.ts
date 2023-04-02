@@ -45,7 +45,7 @@ export const createSnake = (
 
     // let fillColor = '--cs';
     // if (isHead || isTail) {
-    //   fillColor = '#000000'; // Black for head and tail
+    //   fillColor = '#000000'; // Black for head and tail .
     // } else if (isMiddle) {
     //   fillColor = '#FF0000'; // Red for middle body dot
     // }
