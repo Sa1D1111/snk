@@ -12,6 +12,7 @@ export type Options = {
 
 const lerp = (k: number, a: number, b: number) => (1 - k) * a + k * b;
 
+// support for custome head,tail,body color
 export const createSnake = (
   chain: Snake[],
   { sizeCell, sizeDot }: Options,
@@ -38,6 +39,16 @@ export const createSnake = (
 
     const r = Math.min(4.5, (4 * s) / sizeDot);
 
+    const isHead = i === 0;
+    const isTail = i === length - 1;
+    const isMiddle = i === Math.floor(length / 2);
+    let fillColor = '--cs';
+    if (isHead || isTail) {
+      fillColor = '#000000'; // Black for head and tail
+    } else if (isMiddle) {
+      fillColor = '#FF0000'; // Red for middle body dot
+    }
+
     return h("rect", {
       class: `s s${i}`,
       x: m.toFixed(1),
@@ -46,8 +57,49 @@ export const createSnake = (
       height: s.toFixed(1),
       rx: r.toFixed(1),
       ry: r.toFixed(1),
+      style: `fill: ${fillColor}`,
     });
   });
+
+
+
+
+// export const createSnake = (
+//   chain: Snake[],
+//   { sizeCell, sizeDot }: Options,
+//   duration: number
+// ) => {
+//   const snakeN = chain[0] ? getSnakeLength(chain[0]) : 0;
+
+//   const snakeParts: Point[][] = Array.from({ length: snakeN }, () => []);
+
+//   for (const snake of chain) {
+//     const cells = snakeToCells(snake);
+//     for (let i = cells.length; i--; ) snakeParts[i].push(cells[i]);
+//   }
+
+//   const svgElements = snakeParts.map((_, i, { length }) => {
+//     // compute snake part size
+//     const dMin = sizeDot * 0.8;
+//     const dMax = sizeCell * 0.9;
+//     const iMax = Math.min(4, length);
+//     const u = (1 - Math.min(i, iMax) / iMax) ** 2;
+//     const s = lerp(u, dMin, dMax);
+
+//     const m = (sizeCell - s) / 2;
+
+//     const r = Math.min(4.5, (4 * s) / sizeDot);
+
+//     return h("rect", {
+//       class: `s s${i}`,
+//       x: m.toFixed(1),
+//       y: m.toFixed(1),
+//       width: s.toFixed(1),
+//       height: s.toFixed(1),
+//       rx: r.toFixed(1),
+//       ry: r.toFixed(1),
+//     });
+//   });
 
   const transform = ({ x, y }: Point) =>
     `transform:translate(${x * sizeCell}px,${y * sizeCell}px)`;
